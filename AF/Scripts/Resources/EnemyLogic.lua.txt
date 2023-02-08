@@ -1,0 +1,25 @@
+local Time = CS.UnityEngine.Time
+local Random = CS.UnityEngine.Random
+local xSpeed = 0
+--怪兽横向移动
+lateralMove = function(enemyLogic,enemy)
+	local dz = enemyLogic.zSpeed*Time.deltaTime
+	local dx = xSpeed*Time.deltaTime
+	local enemyTransform = enemy:GetComponent("Transform")
+	enemyTransform:Translate(dx,0,dz)
+	--print(xSpeed)
+end
+
+--随机生成怪兽横向移动距离
+snakeMove = function()
+	local options = { -10, -5, 5, 10 }
+	local sel = Random.Range(1, #options+1)
+	local a,b = math.modf(sel);
+	xSpeed = options[a]
+--	print(xSpeed)
+end
+
+--每秒改变横向移动距离
+invokeChange = function(enemyLogic)
+	enemyLogic:InvokeRepeating("SMove",1,1)
+end

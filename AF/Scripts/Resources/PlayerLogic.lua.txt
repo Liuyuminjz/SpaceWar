@@ -1,0 +1,29 @@
+--local Object = CS.UnityEngine.Object
+local gameObject = CS.UnityEngine.GameObject
+local Input = CS.UnityEngine.Input
+local KeyCode = CS.UnityEngine.KeyCode
+
+--发射一颗子弹
+fire = function(playerClass)
+	local node = gameObject
+	node = gameObject.Instantiate(playerClass.bulletPrefab,playerClass.bulletFolder)
+	local nodeTransform = node:GetComponent("Transform")
+	nodeTransform.position = playerClass.firePoint.position
+--print(playerClass.firePoint.position)
+end
+
+--持续开火
+keepFire = function(playerClass)
+	playerClass:InvokeRepeating("Shot",playerClass.bulletInterval,playerClass.bulletInterval)
+end
+
+--控制玩家移动
+controlKey = function(bird,playerClass)
+	local birdTransform = bird:GetComponent("Transform")
+	if Input.GetKey(KeyCode.A) then
+		birdTransform:Translate(-playerClass.playerSpeed,0,0)
+	end
+	if Input.GetKey(KeyCode.D) then
+		birdTransform:Translate(playerClass.playerSpeed,0,0)
+	end
+end

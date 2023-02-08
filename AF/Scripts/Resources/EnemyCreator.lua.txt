@@ -1,0 +1,19 @@
+local gameObject = CS.UnityEngine.GameObject
+local Vector3 = CS.UnityEngine.Vector3
+local Random = CS.UnityEngine.Random
+--生成怪兽
+createEnemy = function(enemyCreatorClass,enemyCreator)
+	local enemyTransform = enemyCreator:GetComponent("Transform")
+	local node = gameObject
+	node = gameObject.Instantiate(enemyCreatorClass.enemyPrefab,enemyTransform)
+	node.transform.position = enemyTransform.position
+	node.transform.localEulerAngles = Vector3(0, 180, 0)
+
+	local dx = Random.Range(-30, 30);
+	local nodeTransform = node:GetComponent("Transform")
+	nodeTransform:Translate(dx, 0, 0);
+end
+--每隔一段时间生成怪兽
+repeatCreateEnemy = function(enemyCreatorClass)
+	enemyCreatorClass:InvokeRepeating("createMonster",0.1,enemyCreatorClass.interval)
+end

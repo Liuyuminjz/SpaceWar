@@ -1,0 +1,30 @@
+local gameObject = CS.UnityEngine.GameObject
+local Time = CS.UnityEngine.Time
+--local Collider = CS.UnityEngine.Collider
+--子弹自毁
+local bullet = gameObject
+--子弹自毁方法
+selfDestroy = function(bullet)
+	gameObject.Destroy(bullet)
+	
+end
+--子弹隔一段时间自毁
+invokeDestroy = function(bulletClass)
+	bulletClass:Invoke("SDestroy",bulletClass.lifetime)
+end
+
+
+--子弹飞行  
+bulletShot = function(bullet,bulletClass)
+	local bulletTransform = bullet:GetComponent("Transform")
+	bulletTransform:Translate(0,0,bulletClass.speed*Time.deltaTime)
+end
+
+--射击到怪兽
+touchMonster = function(bullet,monster)
+    local index = string.find(monster.name,"怪兽")
+	if index then
+		gameObject.Destroy(bullet)
+		gameObject.Destroy(monster)
+	end
+end

@@ -1,0 +1,4 @@
+local Application = CS.UnityEngine.Application
+setFrameRate = function()
+	Application.targetFrameRate = 60
+end
